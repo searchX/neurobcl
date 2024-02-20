@@ -1,0 +1,27 @@
+[project]
+name = "NeuroBCL"
+version = "0.1.0"
+description = "NeuroBCL (Neuro Bucket Classifier) is percentile based numeric feature normalizer that works to convert target bucket of numeric feature to its approximate bounds (Given multi-level features)"
+authors = [
+    {name = "Harishankar Kumar", email = "hari01584@gmail.com"},
+]
+dependencies = [
+    "sphinx>=7.2.6",
+    "furo>=2024.1.29",
+]
+requires-python = "==3.10.*"
+readme = "README.md"
+license = {text = "MIT"}
+
+[tool.pdm.dev-dependencies]
+sphinx = [
+    "furo>=2024.1.29",
+]
+
+[tool.pdm]
+distribution = true
+
+[tool.pdm.scripts]
+test = "python -m unittest"
+docs = "sh -c 'make -C docs/ clean html && make -C docs/ html'"
+gh = "sh -c 'git push origin --delete gh-pages ; pdm run docs && cp -r docs/_build/html docs/gh-output-html/ && git add docs/gh-output-html && git commit -m 'Deploy' && git subtree push --prefix docs/gh-output-html origin gh-pages && rm -rf docs/gh-output-html'"
