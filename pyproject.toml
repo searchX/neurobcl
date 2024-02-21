@@ -1,6 +1,6 @@
 [project]
 name = "NeuroBCL"
-version = "0.1.0"
+version = "0.1.1"
 description = "NeuroBCL (Neuro Bucket Classifier) is percentile based numeric feature normalizer that works to convert target bucket of numeric feature to its approximate bounds (Given multi-level features)"
 authors = [
     {name = "Harishankar Kumar", email = "hari01584@gmail.com"},
@@ -9,7 +9,7 @@ dependencies = [
     "sphinx>=7.2.6",
     "furo>=2024.1.29",
 ]
-requires-python = "==3.10.*"
+
 readme = "README.md"
 license = {text = "MIT"}
 
