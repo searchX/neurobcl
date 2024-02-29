@@ -18,15 +18,22 @@ class DictionaryBucketTrainer(NeuroBucketTrainer):
         self.keywords = {}
         self.buckets = {}
 
+        def set_add_item(s, item):
+            if type(item) == list: # List add
+                for i in item:
+                    s.add(i)
+            else:
+                s.add(item)
+
         for item in self.data:
             for key in self.keyword_feats:
                 if key not in self.keywords:
                     self.keywords[key] = set()
-                self.keywords[key].add(item[key])
+                set_add_item(self.keywords[key], item[key])
             for key in self.bucket_feats:
                 if key not in self.buckets:
                     self.buckets[key] = set()
-                self.buckets[key].add(item[key])
+                set_add_item(self.buckets[key], item[key])
 
         # Convert to list (making it easy serializable)
         for key in self.keywords:

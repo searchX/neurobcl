@@ -31,8 +31,16 @@ class NeuroBucketClassifier(ABC):
 
         # Our datastore to save all the data
         self.indexer_hash = indexer_hash
-        self.filter_features = filter_features
-        self.bucket_features = bucket_features
+
+        if type(filter_features) == dict:
+            self.filter_features = list(filter_features.keys())
+        elif type(filter_features) == list:
+            self.filter_features = filter_features
+
+        if type(bucket_features) == dict:
+            self.bucket_features = list(bucket_features.keys())
+        elif type(bucket_features) == list:
+            self.bucket_features = bucket_features
 
     def _get_best_percentile_list(self, target_key: str, filters: dict = {}):
         """Get the best percentile list for the given target key and filters, brute force approach to find the best percentile list
@@ -218,6 +226,11 @@ class NeuroBucketTrainer(ABC):
         :type current_filters: dict
         :type percentile_list: List
         """
+
+        # Check if percentile list has any good entries, ie non null
+        if not any(percentile_list):
+            return
+
         self.indexer_hash[order_invariant(bucket_feat_name, current_filters)] = percentile_list
 
     def depth_features_index(self, bucket_feat_name: str, depth: int, current_filters = {}):
