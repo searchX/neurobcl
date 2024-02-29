@@ -228,8 +228,8 @@ class NeuroBucketTrainer(ABC):
         """
 
         # Check if percentile list has any good entries, ie non null
-        if not any(percentile_list):
-            return
+        # if not any(percentile_list):
+        #     return
 
         self.indexer_hash[order_invariant(bucket_feat_name, current_filters)] = percentile_list
 

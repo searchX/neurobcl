@@ -4,6 +4,11 @@ from functools import cache
 from neurobcl.base.model import NeuroBucketTrainer
 from neurobcl.base.model import NeuroBucketClassifier
 
+def _filter_invariant(item, filter_value):
+    if type(item) == list:
+        return filter_value in item
+    else:
+        return item == filter_value
 class DictionaryBucketTrainer(NeuroBucketTrainer):
     """Train using dictionary/json data, the format of the data should be a list of dictionaries where each dictionary
     represents a single item and the keys of the dictionary represent the features of the item. (Should be uniform)
@@ -49,7 +54,7 @@ class DictionaryBucketTrainer(NeuroBucketTrainer):
 
         filtered_data = self.data
         for key in filters:
-            filtered_data = [item for item in filtered_data if item[key] == filters[key]]
+            filtered_data = [item for item in filtered_data if _filter_invariant(item[key], filters[key])]
         return filtered_data
 
     @cache
@@ -77,7 +82,7 @@ class DictionaryBucketTrainer(NeuroBucketTrainer):
     
         filtered_data = sorted_data
         for key in filters:
-            filtered_data = [item for item in filtered_data if item[key] == filters[key]]
+            filtered_data = [item for item in filtered_data if _filter_invariant(item[key], filters[key])]
 
         if len(filtered_data) == 0:
             return None
